@@ -1,3 +1,9 @@
+use clap::Parser;
+#[derive(Parser)]
+struct Cli {
+    time: String,
+    message: String,
+}
 fn main() {
-    println!("Hello, world!");
+    let _args = Cli::parse();
 }
