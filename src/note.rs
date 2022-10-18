@@ -1,34 +1,39 @@
 use std::format;
 
 pub trait Note {
-    fn create_qry(&self);
+    fn create_qry(&self) -> String;
 }
 
 pub struct NoteWoTitle{
     body: String
 }
-pub impl Note for NoteWoTitle{
+
+impl Note for NoteWoTitle{
     #[inline(never)]
     fn create_qry(&self) -> String {
-        format!("INSERT INTO notes('body') values({})", self.body);
+        format!("INSERT INTO notes(note_id, 'title', 'body') values(NULL, NULL, {})", self.body)
     }
 }
+
 pub struct NoteWoBody{
     title: String
 }
-pub impl Note for NoteWoBody{
-    #[inline[never]]
+
+impl Note for NoteWoBody{
+    #[inline(never)]
     fn create_qry(&self) -> String {
-        format!("INSERT INTO notes('title') values({})", self.title);
-    }
+        format!("INSERT INTO notes(note_id, 'title', 'body') values(NULL, {}, NULL)", self.title)
+    } 
 }
+
 pub struct CompleteNote{
     title: String,
     body: String
 }
-pub impl Note for Completenote{
-    #[inline[never]]
+
+impl Note for CompleteNote {
+    #[inline(never)]
     fn create_qry(&self) -> String {
-        format!("INSERT INTO notes('title, body') values({}, {})", self.title, self.body);
+        format!("INSERT INTO notes('title, body') values(NULL, {}, {})", self.title, self.body)
     }
 }
