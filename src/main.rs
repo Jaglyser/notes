@@ -3,10 +3,15 @@ use std::path::Path;
 use clap::Parser;
 use std::io::{Write, self, BufRead};
 use magic_crypt::{new_magic_crypt, MagicCryptTrait, MagicCrypt256};
+mod database;
+mod note;
+use crate::note::{NoteWoBody, NoteWoTitle, CompleteNote};
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
+    #[clap(short, long, value_parser)]
+    title: Option<String>,
     #[clap(short, long, value_parser)]
     note: Option<String>,
     #[clap(short, long, value_parser, takes_value = false)] 
