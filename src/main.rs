@@ -1,10 +1,13 @@
+mod database;
+mod note;
+
+
 use std::fs::File;
 use std::path::Path;
 use clap::Parser;
 use std::io::{Write, self, BufRead};
 use magic_crypt::{new_magic_crypt, MagicCryptTrait, MagicCrypt256};
-mod database;
-mod note;
+use crate::database::{connect};
 use crate::note::{NoteWoBody, NoteWoTitle, CompleteNote};
 
 #[derive(Parser, Debug)]
@@ -18,8 +21,10 @@ struct Args {
     list: bool
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let args: Args = Args::parse();
+    connect().await;
 
     if args.list {
         print_notes();

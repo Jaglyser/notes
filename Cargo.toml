@@ -9,3 +9,5 @@ edition = "2021"
 clap = { version = "3.2.21", features = ["derive"] }
 magic-crypt = "3.1.11"
 sqlx = { version = "0.6", features = ["runtime-async-std-native-tls", "sqlite"] }
+tokio = { version = "1", features = ["full"] }
+
