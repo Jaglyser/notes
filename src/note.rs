@@ -1,4 +1,6 @@
 use std::format;
+use crate::Args;
+
 
 pub trait Note {
     fn create_qry(&self) -> String;
@@ -37,3 +39,27 @@ impl Note for CompleteNote {
         format!("INSERT INTO notes('title, body') values(NULL, {}, {})", self.title, self.body)
     }
 }
+
+pub fn create_note(args: Args) -> Box<dyn Note> {
+    if args.note.is_none() {
+        Box::new(
+            NoteWoBody{
+                title: args.title.unwrap()
+            }
+        )
+    } else if args.title.is_none() {
+        Box::new(
+            NoteWoTitle{
+                body: args.note.unwrap()
+            }
+        )
+    } else {
+        Box::new(
+            CompleteNote {
+                title: args.title.unwrap(),
+                body: args.note.unwrap()
+            }
+        )
+    }
+}
+
